@@ -1,0 +1,7 @@
+{
+  "DOWNLOAD_URL": "https://saplearninghub.plateau.com/icontent_e/CUSTOM_eu/sap/self-managed/ebook/XXXXX/index.html",
+  "LOGIN": "SUSER",
+  "PASSWORD": "SUSER_PASSWORD",
+  "TARGET_DIR": "./target_dir/",
+  "DEBUG": false
+}
