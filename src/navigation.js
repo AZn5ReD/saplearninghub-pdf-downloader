@@ -22,7 +22,7 @@ export async function login(page) {
     await page.type(constant.PASSWORD_SELECTOR, config.PASSWORD);
     await page.click(constant.SUBMIT_SELECTOR);
 
-    console.log("Submiting...");
+    console.info("Submiting...");
     await redirection(page);
     await redirection(page);
 

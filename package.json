@@ -19,7 +19,7 @@
     "nodemon": "^2.0.3"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/index.js",
+    "dev": "env NODE_ENV=test nodemon --exec babel-node src/index.js",
     "build": "npx babel src --out-dir build --copy-files",
     "start": "node ./build/index.js"
   },

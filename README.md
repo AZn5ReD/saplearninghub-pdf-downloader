@@ -41,6 +41,14 @@ npm run build
 npm run start -- --debug="false" --url="https://exmaple.com" --login="SUSER" --password="SUSER_PASSWORD" --target="./target_dir/"
 ```
 
+## Test
+
+Copy the [config.json](config.json) file into the root of the project with the name `config_test.json`. This file will be use by the test command. It also is gitignored so that no credentials will be committed.
+
+```bash
+npm run dev
+```
+
 ## Build With
 
 - [puppeteer](https://github.com/puppeteer/puppeteer) - Headless Chrome Node.js API

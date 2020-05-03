@@ -1,8 +1,11 @@
+import fs from "fs";
 import minimist from "minimist";
-import config from "../config.json";
 
 const argv = minimist(process.argv.slice(2));
+const configFile =
+  process.env.NODE_ENV === "test" ? "./config_test.json" : "./config.json";
 
+const config = JSON.parse(fs.readFileSync(configFile));
 export default {
   DOWNLOAD_URL: argv.url ? argv.url : config.DOWNLOAD_URL,
   LOGIN: argv.login ? argv.login : config.LOGIN,
