@@ -1,0 +1,29 @@
+{
+  "name": "saplearninghub-pdf-downloader",
+  "version": "1.0.0",
+  "description": "Download eBook from SAP Learning Hub",
+  "main": "index.js",
+  "dependencies": {
+    "puppeteer": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "nodemon": "^2.0.3"
+  },
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AZn5ReD/saplearninghub-pdf-downloader.git"
+  },
+  "author": "AZn5ReD",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AZn5ReD/saplearninghub-pdf-downloader/issues"
+  },
+  "homepage": "https://github.com/AZn5ReD/saplearninghub-pdf-downloader#readme"
+}

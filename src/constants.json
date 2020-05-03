@@ -1,0 +1,11 @@
+{
+  "LEARNINGHUB_URL": "https://learninghub.sap.com/login",
+  "LOGIN_SELECTOR": "input[id='j_username']",
+  "PASSWORD_SELECTOR": "input[id='j_password']",
+  "SUBMIT_SELECTOR": "button[id='logOnFormSubmit']",
+  "URL_CONNECTED": "https://learninghub.sap.com/?languagePrompt=true",
+  "SUCCESS_FACTOR_LINK_TEXT": "Browse Content",
+  "SVG_DIR": "svg_files/",
+  "SVG_URL": "xml/topic$$$.svg",
+  "test": "https://saplearninghub.plateau.com/icontent_e/CUSTOM_eu/sap/self-managed/ebook/HA400_EN_Col14_v3/index.html"
+}
