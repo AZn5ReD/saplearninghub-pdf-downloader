@@ -37,6 +37,16 @@ function initFile(filePath) {
   return { doc, stream };
 }
 
+async function getLastPage(page) {
+  await page.goto(config.DOWNLOAD_URL, { followRedirect: true });
+  await page.waitForSelector("#progressIndicator");
+  const lastPage = await page.evaluate(() =>
+    document.querySelector("#progressIndicator").innerHTML.slice(3)
+  );
+  console.info("Last page:", lastPage);
+  return lastPage;
+}
+
 async function goToURL(page, URLTemplate, i) {
   const downloadURL = URLTemplate.replace(constant.TOPIC_VAR, i);
   console.info("Downloading: ", downloadURL);
@@ -61,10 +71,11 @@ export async function downloadFile(page) {
   const URLTemplate = getURLTemplate();
   const filePath = getFilePath();
   const { doc, stream } = initFile(filePath);
+  const lastPage = await getLastPage(page);
 
   console.info("Starting download...");
   let i = 1;
-  while (true) {
+  while (lastPage ? i <= lastPage : true) {
     try {
       let pageExists = await goToURL(page, URLTemplate, i);
       if (!pageExists) break;

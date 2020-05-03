@@ -18,7 +18,6 @@ async function initPuppeteer() {
 }
 
 async function main() {
-  console.log(config.DEBUG);
   const { browser, page } = await initPuppeteer();
   const connected = await login(page);
   if (!connected) {
