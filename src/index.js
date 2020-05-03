@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 import config from "./config";
 import { login, getAuthorization } from "./navigation";
-import { downloadFile } from "./file";
+import { downloadFile, targetDirCheck } from "./file";
 
 async function initPuppeteer() {
   try {
@@ -19,8 +19,7 @@ async function initPuppeteer() {
 
 async function main() {
   const { browser, page } = await initPuppeteer();
-  const connected = await login(page);
-  if (!connected) {
+  if (!targetDirCheck() || !(await login(page))) {
     return;
   }
   await getAuthorization(page);

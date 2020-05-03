@@ -14,15 +14,25 @@ function getURLTemplate() {
   return URLTemplate;
 }
 
+export function targetDirCheck() {
+  try {
+    if (!fs.existsSync(config.TARGET_DIR)) {
+      console.info(`Target dir ${config.TARGET_DIR} doesn't exist`);
+      fs.mkdirSync(config.TARGET_DIR);
+      console.info(`Directory ${config.TARGET_DIR} created`);
+    }
+    return true;
+  } catch (error) {
+    console.error("Error while creating folder:", error);
+    return false;
+  }
+}
+
 function getFilePath() {
   let filePath = "";
   const URLArray = config.DOWNLOAD_URL.split("/");
   URLArray.pop();
   let filename = URLArray[URLArray.length - 1] + ".pdf";
-  if (!fs.existsSync(config.TARGET_DIR)) {
-    console.error("Target path doesn't exist");
-    return filePath;
-  }
   filePath = config.TARGET_DIR + filename;
   console.info("File path:", filePath);
   return filePath;
