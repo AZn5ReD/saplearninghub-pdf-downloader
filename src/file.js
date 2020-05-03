@@ -39,12 +39,16 @@ function getFilePath() {
 }
 
 function initFile(filePath) {
-  PDFDocument.prototype.addSVG = function (svg, x, y, options) {
-    return SVGtoPDF(this, svg, x, y, options), this;
-  };
-  const doc = new PDFDocument();
-  const stream = fs.createWriteStream(filePath);
-  return { doc, stream };
+  try {
+    PDFDocument.prototype.addSVG = function (svg, x, y, options) {
+      return SVGtoPDF(this, svg, x, y, options), this;
+    };
+    const doc = new PDFDocument();
+    const stream = fs.createWriteStream(filePath);
+    return { doc, stream };
+  } catch (error) {
+    console.error("Error during file initialisation:", error);
+  }
 }
 
 async function getLastPage(page) {
