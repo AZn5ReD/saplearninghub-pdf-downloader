@@ -3,7 +3,7 @@ import PDFDocument from "pdfkit";
 import SVGtoPDF from "svg-to-pdfkit";
 
 import constant from "./constants.json";
-import config from "../config.json"; // TODO Use CLI args ?
+import config from "./config";
 
 function getURLTemplate() {
   const URLArray = config.DOWNLOAD_URL.split("/");

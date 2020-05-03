@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import config from "./config";
 import { login, getAuthorization } from "./navigation";
 import { downloadFile } from "./file";
 
@@ -7,7 +8,7 @@ async function initPuppeteer() {
     console.info("Starting script...");
     const browser = await puppeteer.launch({
       args: ["--disable-features=site-per-process"],
-      headless: false,
+      headless: !config.DEBUG,
     });
     const page = await browser.newPage();
     return { browser, page };
@@ -17,6 +18,7 @@ async function initPuppeteer() {
 }
 
 async function main() {
+  console.log(config.DEBUG);
   const { browser, page } = await initPuppeteer();
   const connected = await login(page);
   if (!connected) {

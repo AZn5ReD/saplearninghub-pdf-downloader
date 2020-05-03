@@ -1,5 +1,5 @@
 import constant from "./constants.json";
-import config from "../config.json"; // TODO Use CLI args ?
+import config from "./config";
 
 async function redirection(page) {
   await page.waitForNavigation();
