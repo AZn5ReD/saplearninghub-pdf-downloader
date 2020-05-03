@@ -7,13 +7,18 @@ async function initPuppeteer() {
     console.info("Starting script...");
     const browser = await puppeteer.launch({
       args: ["--disable-features=site-per-process"],
-      //   headless: false,
+      headless: false,
     });
     const page = await browser.newPage();
-    return page;
-  } catch (e) {
-    console.error("Error during puppeteer initialisation:", e);
+    return { browser, page };
+  } catch (error) {
+    console.error("Error during puppeteer initialisation:", error);
   }
+}
+
+async function redirection(page) {
+  await page.waitForNavigation();
+  console.info("Redirected to:", page.url());
 }
 
 async function login(page) {
@@ -33,10 +38,8 @@ async function login(page) {
     await page.click(constant.SUBMIT_SELECTOR);
 
     console.log("Submiting...");
-    await page.waitForNavigation();
-    console.info("Redirected to:", page.url());
-    await page.waitForNavigation();
-    console.info("Redirected to", page.url());
+    await redirection(page);
+    await redirection(page);
 
     if (page.url() === constant.URL_CONNECTED) {
       console.info("Connected :)");
@@ -45,36 +48,55 @@ async function login(page) {
       console.error("Can't connect :(");
       return false;
     }
-  } catch (e) {
-    console.error("Error during login:", e);
+  } catch (error) {
+    console.error("Error during login:", error);
   }
 }
 
+async function cookiePopup(page) {
+  try {
+    const frame = await page
+      .mainFrame()
+      .childFrames()
+      .find((f) => {
+        return f.name().startsWith("pop-frame") ? f : null;
+      });
+    if (!frame) {
+      console.info("No cookie consent");
+      return;
+    }
+    await frame.waitForSelector("a[class='call']");
+    await frame.click("a[class='call']");
+    console.info("Cookie consent accepted");
+    await page.waitForNavigation();
+  } catch (error) {
+    console.error("Error during cookie consent:", error);
+  }
+}
+
+async function navToSF(page) {
+  const links = await page.$x("//a[contains(text(), 'Browse Content')]");
+  if (links.length <= 0) {
+    console.error("Can't find SuccessFactor Link");
+    return;
+  }
+  await page.evaluateHandle((el) => {
+    el.target = "_self";
+  }, links[0]);
+  await links[0].click();
+  await redirection(page);
+}
+
 async function main() {
-  const page = await initPuppeteer();
+  const { browser, page } = await initPuppeteer();
   const connected = await login(page);
   if (!connected) {
     return;
   }
+  await cookiePopup(page);
+  await navToSF(page);
 
-  const frame = await page
-    .mainFrame()
-    .childFrames()
-    .find((f) => {
-      return f.name().startsWith("pop-frame") ? f : null;
-    });
-  await frame.waitForSelector("a[class='call']");
-  await frame.click("a[class='call']");
-
-  await page.waitForNavigation();
-  //   const links = await page.$$("a[href^='https://performancemanager']");
-  //   for (let link in links) {
-  //     console.log(link);
-  //   }
-  //   await links[1].click();
-
-  await page.mainFrame().waitForSelector("a[href^='https://performance']");
-  await page.click("a[target='_blank']");
+  await page.goto(constant.test, { followRedirect: true });
 }
 
 main();
