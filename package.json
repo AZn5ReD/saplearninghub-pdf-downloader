@@ -4,7 +4,9 @@
   "description": "Download eBook from SAP Learning Hub",
   "main": "index.js",
   "dependencies": {
-    "puppeteer": "^3.0.2"
+    "pdfkit": "^0.11.0",
+    "puppeteer": "^3.0.2",
+    "svg-to-pdfkit": "^0.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
