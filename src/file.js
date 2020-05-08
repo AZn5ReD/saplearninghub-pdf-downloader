@@ -44,11 +44,11 @@ function initFile(filePath) {
       return SVGtoPDF(this, svg, x, y, options), this;
     };
     const doc = new PDFDocument();
-    doc.pipe(fs.createWriteStream(filePath));
-    doc.on("end", () => {
+    const stream = fs.createWriteStream(filePath);
+    stream.on("finish", () => {
       process.exit();
     });
-    return doc;
+    return { doc, stream };
   } catch (error) {
     console.error("Error during file initialisation:", error);
   }
@@ -87,7 +87,7 @@ export async function downloadFile(page) {
   console.info("Initialize file");
   const URLTemplate = getURLTemplate();
   const filePath = getFilePath();
-  const doc = initFile(filePath);
+  const { doc, stream } = initFile(filePath);
   const lastPage = await getLastPage(page);
 
   console.info("Starting download...");
@@ -105,6 +105,7 @@ export async function downloadFile(page) {
   }
 
   try {
+    doc.pipe(stream);
     doc.end();
     console.info(`File ${filePath} created :)`);
   } catch (error) {

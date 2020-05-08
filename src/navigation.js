@@ -62,17 +62,21 @@ async function cookiePopup(page) {
 }
 
 async function navToSF(page) {
-  console.info(`Navigating to SuccessFactor`);
-  const links = await page.$$(constant.SUCCESS_FACTOR_LINK_SELECTOR);
-  if (links.length <= 0) {
-    console.error("Can't find SuccessFactor Link");
-    return;
+  try {
+    console.info(`Navigating to SuccessFactor`);
+    const links = await page.$$(constant.SUCCESS_FACTOR_LINK_SELECTOR);
+    if (links.length <= 0) {
+      console.error("Can't find SuccessFactor Link");
+      return;
+    }
+    await page.evaluateHandle((el) => {
+      el.target = "_self";
+    }, links[0]);
+    await links[0].click();
+    await redirection(page);
+  } catch (error) {
+    console.error("Error while navToSF", error);
   }
-  await page.evaluateHandle((el) => {
-    el.target = "_self";
-  }, links[0]);
-  await links[0].click();
-  await redirection(page);
 }
 
 export async function getAuthorization(page) {
