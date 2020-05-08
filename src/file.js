@@ -81,7 +81,7 @@ async function addSVGToPDF(page, doc, i) {
 }
 
 export async function downloadFile(page) {
-  console.info("Initialise file");
+  console.info("Initialize file");
   const URLTemplate = getURLTemplate();
   const filePath = getFilePath();
   const { doc, stream } = initFile(filePath);

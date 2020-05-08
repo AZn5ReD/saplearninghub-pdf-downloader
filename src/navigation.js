@@ -2,7 +2,9 @@ import constant from "./constants.json";
 import config from "./config";
 
 async function redirection(page) {
-  await page.waitForNavigation();
+  await page.waitForNavigation({
+    waitUntil: "networkidle0",
+  });
   console.info("Redirected to:", page.url());
 }
 
@@ -60,10 +62,8 @@ async function cookiePopup(page) {
 }
 
 async function navToSF(page) {
-  console.info(`Navigating to ${constant.SUCCESS_FACTOR_LINK_TEXT}`);
-  const links = await page.$x(
-    `//a[contains(text(), ${constant.SUCCESS_FACTOR_LINK_TEXT})]`
-  );
+  console.info(`Navigating to SuccessFactor`);
+  const links = await page.$$(constant.SUCCESS_FACTOR_LINK_SELECTOR);
   if (links.length <= 0) {
     console.error("Can't find SuccessFactor Link");
     return;

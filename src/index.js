@@ -11,6 +11,10 @@ async function initPuppeteer() {
       headless: !config.DEBUG,
     });
     const page = await browser.newPage();
+    page.on("dialog", async (dialog) => {
+      console.info("Skipping dialog:", dialog.message());
+      await dialog.dismiss();
+    });
     return { browser, page };
   } catch (error) {
     console.error("Error during puppeteer initialisation:", error);
@@ -24,6 +28,11 @@ async function main() {
   }
   await getAuthorization(page);
   await downloadFile(page);
+
+  process.on("exit", (code) => {
+    console.log(`Exiting with code ${code}`);
+  });
+  process.exit();
 }
 
 main();
