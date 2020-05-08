@@ -109,3 +109,4 @@ config_test.json
 
 # Build
 build/
+gui/

@@ -4,6 +4,7 @@
   "description": "Download eBook from SAP Learning Hub",
   "main": "index.js",
   "dependencies": {
+    "@nodegui/nodegui": "^0.19.0",
     "minimist": "^1.2.5",
     "pdfkit": "^0.11.0",
     "puppeteer": "^3.0.2",
@@ -21,7 +22,8 @@
   "scripts": {
     "dev": "env NODE_ENV=test nodemon --exec babel-node src/index.js",
     "build": "npx babel src --out-dir build --copy-files",
-    "start": "node ./build/index.js"
+    "start": "node ./build/index.js",
+    "dev-gui": "npx babel src/gui.js --out-dir gui && qode --inspect gui/gui.js"
   },
   "repository": {
     "type": "git",

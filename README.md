@@ -21,7 +21,7 @@ They can be mixed. For example you can set the user/password in the config file 
 
 The download URL of the eBook URL is on the learning hub :
 
-![SAP Learning Hub](images/SAP_Learning_Hub.png)
+![SAP Learning Hub](images/readme_SAP_LearningHub.png)
 
 ### Config File
 
