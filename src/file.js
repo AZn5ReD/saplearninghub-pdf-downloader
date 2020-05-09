@@ -33,7 +33,7 @@ function getFilePath() {
   const URLArray = config.DOWNLOAD_URL.split("/");
   URLArray.pop();
   let filename = URLArray[URLArray.length - 1] + ".pdf";
-  filePath = config.TARGET_DIR + filename;
+  filePath = config.TARGET_DIR + "/" + filename;
   console.info("File path:", filePath);
   return filePath;
 }

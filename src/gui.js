@@ -7,13 +7,13 @@ import {
   QFileDialog,
   QLineEdit,
   QToolButton,
-  QGroupBox,
-  QBoxLayout,
   QIcon,
   EchoMode,
   FileMode,
   QPlainTextEdit,
 } from "@nodegui/nodegui";
+
+import child_process from "child_process";
 
 function createWindow() {
   const win = new QMainWindow();
@@ -159,11 +159,24 @@ function createDownloadButton(
     color: white;
   `);
   button.addEventListener("clicked", () => {
-    log.insertPlainText(link.text() + "\n");
-    log.insertPlainText(directory.text() + "\n");
-    log.insertPlainText(user.text() + "\n");
-    log.insertPlainText(password.text() + "\n");
-    console.log(link, directory, user, password);
+    // TODO Keep cursor down
+    // TODO Disable downloadbutton
+    const child = child_process.fork(
+      "./build/index.js",
+      [
+        `--url=${link.text()}`,
+        `--login=${user.text()}`,
+        `--password=${password.text()}`,
+        `--target=${directory.text()}`,
+      ],
+      {
+        stdio: ["pipe", "pipe", "pipe", "ipc"],
+      }
+    );
+
+    child.stdout.on("data", (data) => {
+      log.insertPlainText(data);
+    });
   });
 
   layout.addWidget(button);
@@ -178,6 +191,8 @@ function main() {
   const user = createInput(rootLayout, "User:");
   const password = createInput(rootLayout, "Password:");
   password.setEchoMode(EchoMode.Password);
+  // TODO Add progress bar (use process.send and child.on("message"))
+  // TODO Bundle puppeteer ?
   const log = createConsole(rootLayout);
   const downloadButton = createDownloadButton(
     rootLayout,

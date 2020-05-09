@@ -23,7 +23,8 @@
     "dev": "env NODE_ENV=test nodemon --exec babel-node src/index.js",
     "build": "npx babel src --out-dir build --copy-files",
     "start": "node ./build/index.js",
-    "dev-gui": "npx babel src/gui.js --out-dir gui && qode --inspect gui/gui.js"
+    "dev-gui": "npx babel src/gui.js --out-dir gui && qode --inspect gui/gui.js",
+    "start-gui": "qode ./build/gui.js"
   },
   "repository": {
     "type": "git",
