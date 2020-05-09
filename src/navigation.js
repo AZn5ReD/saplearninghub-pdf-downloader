@@ -2,10 +2,10 @@ import constant from "./constants.json";
 import config from "./config";
 
 async function redirection(page) {
+  console.info("Redirected to:", page.url());
   await page.waitForNavigation({
     waitUntil: "networkidle0",
   });
-  console.info("Redirected to:", page.url());
 }
 
 export async function login(page) {
@@ -22,10 +22,15 @@ export async function login(page) {
 
     console.info("Entering password: ***");
     await page.type(constant.PASSWORD_SELECTOR, config.PASSWORD);
-    await page.click(constant.SUBMIT_SELECTOR);
 
     console.info("Submiting...");
-    await redirection(page);
+    await Promise.all([
+      page.click(constant.SUBMIT_SELECTOR),
+      redirection(page),
+    ]);
+    if (page.url().startsWith("https://accounts.sap.com/")) {
+      throw new Error("Login failed :(");
+    }
     await redirection(page);
 
     if (page.url() === constant.URL_CONNECTED) {

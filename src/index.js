@@ -24,7 +24,7 @@ async function initPuppeteer() {
 async function main() {
   const { browser, page } = await initPuppeteer();
   if (!targetDirCheck() || !(await login(page))) {
-    return;
+    throw new Error("Error during init");
   }
   await getAuthorization(page);
   await downloadFile(page);
@@ -34,4 +34,7 @@ async function main() {
   });
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exit();
+});

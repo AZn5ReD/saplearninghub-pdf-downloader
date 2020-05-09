@@ -15,6 +15,27 @@ import {
 
 import child_process from "child_process";
 
+const defaultWidgetStyle = `
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+`;
+
+function createWidget(rootLayout) {
+  const widget = new QWidget();
+  widget.setInlineStyle(defaultWidgetStyle);
+  rootLayout.addWidget(widget);
+  return widget;
+}
+
+function createLayout(widget) {
+  const layout = new FlexLayout();
+  layout.setFlexNode(widget.getFlexNode());
+  widget.setLayout(layout);
+  return layout;
+}
+
 function createWindow() {
   const win = new QMainWindow();
   win.setWindowTitle("SAP LearningHub PDF Downloader");
@@ -39,17 +60,8 @@ function createWindow() {
 }
 
 function createInput(rootLayout, labelText) {
-  const widget = new QWidget();
-  widget.setInlineStyle(`
-    padding: 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  `);
-  rootLayout.addWidget(widget);
-
-  const layout = new FlexLayout();
-  layout.setFlexNode(widget.getFlexNode());
+  const widget = createWidget(rootLayout);
+  const layout = createLayout(widget);
 
   const label = new QLabel();
   label.setText(labelText);
@@ -64,22 +76,12 @@ function createInput(rootLayout, labelText) {
 
   layout.addWidget(label);
   layout.addWidget(input);
-  widget.setLayout(layout);
   return input;
 }
 
 function createDirectoryInput(rootLayout, labelText) {
-  const widget = new QWidget();
-  widget.setInlineStyle(`
-    padding: 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  `);
-  rootLayout.addWidget(widget);
-
-  const layout = new FlexLayout();
-  layout.setFlexNode(widget.getFlexNode());
+  const widget = createWidget(rootLayout);
+  const layout = createLayout(widget);
 
   const label = new QLabel();
   label.setText(labelText);
@@ -104,23 +106,16 @@ function createDirectoryInput(rootLayout, labelText) {
   layout.addWidget(label);
   layout.addWidget(input);
   layout.addWidget(button);
-  widget.setLayout(layout);
   return input;
 }
 
 function createConsole(rootLayout) {
-  const widget = new QWidget();
+  const widget = createWidget(rootLayout);
   widget.setInlineStyle(`
-    padding: 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    ${defaultWidgetStyle}
     flex: 1;
   `);
-  rootLayout.addWidget(widget);
-
-  const layout = new FlexLayout();
-  layout.setFlexNode(widget.getFlexNode());
+  const layout = createLayout(widget);
 
   const input = new QPlainTextEdit();
   input.setReadOnly(true);
@@ -129,7 +124,6 @@ function createConsole(rootLayout) {
   `);
 
   layout.addWidget(input);
-  widget.setLayout(layout);
   return input;
 }
 
@@ -139,17 +133,8 @@ function createDownloadButton(
   { link, directory, user, password },
   log
 ) {
-  const widget = new QWidget();
-  widget.setInlineStyle(`
-    padding: 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  `);
-  rootLayout.addWidget(widget);
-
-  const layout = new FlexLayout();
-  layout.setFlexNode(widget.getFlexNode());
+  const widget = createWidget(rootLayout);
+  const layout = createLayout(widget);
 
   const button = new QPushButton();
   button.setText(labelText);
@@ -161,6 +146,7 @@ function createDownloadButton(
   button.addEventListener("clicked", () => {
     // TODO Keep cursor down
     // TODO Disable downloadbutton
+    button.setEnabled(false);
     const child = child_process.fork(
       "./build/index.js",
       [
@@ -177,10 +163,11 @@ function createDownloadButton(
     child.stdout.on("data", (data) => {
       log.insertPlainText(data);
     });
+
+    child.on("message", (message) => {});
   });
 
   layout.addWidget(button);
-  widget.setLayout(layout);
   return button;
 }
 

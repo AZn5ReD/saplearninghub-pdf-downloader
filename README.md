@@ -38,7 +38,7 @@ Here is an example of the possible arguments
 
 ```bash
 npm run build
-npm run start -- --debug="false" --url="https://exmaple.com" --login="SUSER" --password="SUSER_PASSWORD" --target="./target_dir/"
+npm run start -- --debug="false" --url="https://exmaple.com" --login="SUSER" --password="SUSER_PASSWORD" --target="./target_dir"
 ```
 
 ## Test
