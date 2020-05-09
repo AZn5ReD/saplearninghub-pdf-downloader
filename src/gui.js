@@ -96,8 +96,7 @@ function createDirectoryInput(rootLayout, labelText) {
   `);
 
   const button = new QToolButton();
-  // TODO Icon not working
-  button.setIcon(new QIcon("../images/icon_directory.png"));
+  button.setIcon(new QIcon("./images/icon_directory.png"));
   button.addEventListener("clicked", () => {
     const fileDialog = new QFileDialog();
     fileDialog.setFileMode(FileMode.Directory);
@@ -164,7 +163,6 @@ function createDownloadButton(
     background: green;
   `);
   button.addEventListener("clicked", () => {
-    // TODO Keep cursor down
     button.setEnabled(false);
     const child = child_process.fork(
       "./build/index.js",
@@ -212,7 +210,6 @@ function main() {
   const password = createInput(rootLayout, "Password:");
   password.setEchoMode(EchoMode.Password);
   const progress = createProgressBar(rootLayout);
-  // TODO Add progress bar (use process.send and child.on("message"))
   // TODO Bundle puppeteer ?
   const log = createConsole(rootLayout);
   const downloadButton = createDownloadButton(
