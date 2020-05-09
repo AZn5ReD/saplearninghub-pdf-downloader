@@ -11,6 +11,7 @@ import {
   EchoMode,
   FileMode,
   QPlainTextEdit,
+  QProgressBar,
 } from "@nodegui/nodegui";
 
 import child_process from "child_process";
@@ -95,6 +96,7 @@ function createDirectoryInput(rootLayout, labelText) {
   `);
 
   const button = new QToolButton();
+  // TODO Icon not working
   button.setIcon(new QIcon("../images/icon_directory.png"));
   button.addEventListener("clicked", () => {
     const fileDialog = new QFileDialog();
@@ -107,6 +109,25 @@ function createDirectoryInput(rootLayout, labelText) {
   layout.addWidget(input);
   layout.addWidget(button);
   return input;
+}
+
+function createProgressBar(rootLayout) {
+  const widget = createWidget(rootLayout);
+  widget.setInlineStyle(`
+    ${defaultWidgetStyle}
+    flex: 1;
+  `);
+
+  const layout = createLayout(widget);
+
+  const progress = new QProgressBar();
+  progress.setInlineStyle(`
+    flex: 1;
+  `);
+  progress.setMinimum(0);
+
+  layout.addWidget(progress);
+  return progress;
 }
 
 function createConsole(rootLayout) {
@@ -130,7 +151,7 @@ function createConsole(rootLayout) {
 function createDownloadButton(
   rootLayout,
   labelText,
-  { link, directory, user, password },
+  { link, directory, user, password, progress },
   log
 ) {
   const widget = createWidget(rootLayout);
@@ -141,11 +162,9 @@ function createDownloadButton(
   button.setInlineStyle(`
     flex: 1;
     background: green;
-    color: white;
   `);
   button.addEventListener("clicked", () => {
     // TODO Keep cursor down
-    // TODO Disable downloadbutton
     button.setEnabled(false);
     const child = child_process.fork(
       "./build/index.js",
@@ -163,8 +182,22 @@ function createDownloadButton(
     child.stdout.on("data", (data) => {
       log.insertPlainText(data);
     });
+    child.stderr.on("data", (data) => {
+      log.insertPlainText(data);
+    });
 
-    child.on("message", (message) => {});
+    child.on("message", (message) => {
+      if (message.maximum) {
+        progress.setMaximum(message.maximum);
+      }
+      if (message.progress) {
+        progress.setValue(message.progress);
+      }
+    });
+
+    child.on("exit", () => {
+      button.setEnabled(true);
+    });
   });
 
   layout.addWidget(button);
@@ -178,13 +211,14 @@ function main() {
   const user = createInput(rootLayout, "User:");
   const password = createInput(rootLayout, "Password:");
   password.setEchoMode(EchoMode.Password);
+  const progress = createProgressBar(rootLayout);
   // TODO Add progress bar (use process.send and child.on("message"))
   // TODO Bundle puppeteer ?
   const log = createConsole(rootLayout);
   const downloadButton = createDownloadButton(
     rootLayout,
     "Download",
-    { link, directory, user, password },
+    { link, directory, user, password, progress },
     log
   );
   win.show();

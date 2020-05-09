@@ -60,6 +60,7 @@ async function getLastPage(page) {
   const lastPage = await page.evaluate(() =>
     document.querySelector("#progressIndicator").innerHTML.slice(3)
   );
+  process.send({ maximum: lastPage });
   console.info("Last page:", lastPage);
   return lastPage;
 }
@@ -97,6 +98,7 @@ export async function downloadFile(page) {
       let pageExists = await goToURL(page, URLTemplate, i);
       if (!pageExists) break;
       await addSVGToPDF(page, doc, i);
+      process.send({ progress: i });
       i++;
     } catch (error) {
       console.error(error);
