@@ -1,6 +1,5 @@
 const path = require("path");
 const StringReplacePlugin = require("string-replace-webpack-plugin");
-// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: process.NODE_ENV || "development",
@@ -64,5 +63,4 @@ module.exports = {
     },
   },
   plugins: [new StringReplacePlugin()],
-  //   plugins: [new CleanWebpackPlugin()],
 };
