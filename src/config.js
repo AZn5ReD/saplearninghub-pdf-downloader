@@ -3,11 +3,15 @@ import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2));
 const configFile =
-  process.env.NODE_ENV === "test" ? "./config_test.json" : "./config.json";
+  process.env.NODE_ENV === "development"
+    ? "./config_test.json"
+    : "./config.json";
 let config = {};
 
 try {
-  config = JSON.parse(fs.readFileSync(configFile));
+  if (fs.existsSync(configFile)) {
+    config = JSON.parse(fs.readFileSync(configFile));
+  }
 } catch (error) {
   console.error("Error while reading config file:", error);
 }
@@ -18,4 +22,5 @@ export default {
   PASSWORD: argv.password ? argv.password : config.PASSWORD,
   TARGET_DIR: argv.target ? argv.target : config.TARGET_DIR,
   DEBUG: argv.debug ? argv.debug : config.DEBUG,
+  CHROME_EXE: argv.chrome ? argv.chrome : config.CHROME_EXE,
 };

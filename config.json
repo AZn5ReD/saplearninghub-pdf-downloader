@@ -3,5 +3,6 @@
   "LOGIN": "SUSER",
   "PASSWORD": "SUSER_PASSWORD",
   "TARGET_DIR": "./target_dir",
-  "DEBUG": false
+  "DEBUG": false,
+  "CHROME_EXE": "/usr/bin/google-chrome"
 }

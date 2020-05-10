@@ -1,5 +1,7 @@
 import fs from "fs";
 import PDFDocument from "pdfkit";
+// import PDFDocument from "pdfkit-next";
+// import PDFDocument from "./pdfkit.standalone";
 import SVGtoPDF from "svg-to-pdfkit";
 
 import constant from "./constants.json";
@@ -60,7 +62,9 @@ async function getLastPage(page) {
   const lastPage = await page.evaluate(() =>
     document.querySelector("#progressIndicator").innerHTML.slice(3)
   );
-  process.send({ maximum: lastPage });
+  if (process.send) {
+    process.send({ maximum: lastPage });
+  }
   console.info("Last page:", lastPage);
   return lastPage;
 }
@@ -98,7 +102,9 @@ export async function downloadFile(page) {
       let pageExists = await goToURL(page, URLTemplate, i);
       if (!pageExists) break;
       await addSVGToPDF(page, doc, i);
-      process.send({ progress: i });
+      if (process.send) {
+        process.send({ progress: i });
+      }
       i++;
     } catch (error) {
       console.error(error);
