@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "start": "webpack && node ./dist/index.js",
+    "start": "env NODE_ENV=production node ./dist/index.js",
     "dev": "env NODE_ENV=development webpack && node ./dist/index.js"
   },
   "repository": {
