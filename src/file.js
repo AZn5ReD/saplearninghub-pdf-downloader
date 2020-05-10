@@ -1,7 +1,5 @@
 import fs from "fs";
 import PDFDocument from "pdfkit";
-// import PDFDocument from "pdfkit-next";
-// import PDFDocument from "./pdfkit.standalone";
 import SVGtoPDF from "svg-to-pdfkit";
 
 import constant from "./constants.json";

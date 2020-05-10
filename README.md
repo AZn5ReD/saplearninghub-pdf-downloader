@@ -55,7 +55,7 @@ npm run dev
 - [pdfkit](https://github.com/foliojs/pdfkit) - A JavaScript PDF generation library for Node and the browser
 - [babel](https://github.com/babel/babel) - Babel is a compiler for writing next generation JavaScript.
 - [minimist](https://github.com/substack/minimist) - parse argument options
-- [nodemon](https://github.com/remy/nodemon) - Monitor for any changes in your node.js application and automatically restart the server - perfect for development
+- [webpack](https://github.com/webpack/webpack) - A bundler for javascript and friends.
 
 ## Contributing
 
