@@ -4,6 +4,14 @@ Download eBook as PDF from SAP Learning Hub.
 
 ## Getting Started
 
+## Prerequisite
+
+Having Google Chrome installed.
+You should put the path of chrome.exe in the [config.json](config.json) file in the attribute : `CHROME_EXE`. These are the default paths depending on your os :
+
+- Windows : `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`
+- Linux : `/usr/bin/google-chrome`
+
 ## Installation
 
 ```bash
@@ -12,10 +20,11 @@ npm install
 
 ## Usage
 
-There are 2 modes :
+There are 3 modes :
 
 - CLI
 - Config file
+- GUI
 
 They can be mixed. For example you can set the user/password in the config file and set the URL in the CLI. The values from the CLI will override the values from the file.
 
@@ -40,6 +49,10 @@ Here is an example of the possible arguments
 npm run build
 npm run start -- --debug="false" --url="https://exmaple.com" --login="SUSER" --password="SUSER_PASSWORD" --target="./target_dir"
 ```
+
+### GUI
+
+For the GUI version, check the GUI repo : [saplearninghub-pdf-downloader-gui](https://github.com/AZn5ReD/saplearninghub-pdf-downloader-gui)
 
 ## Test
 
