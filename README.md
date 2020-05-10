@@ -6,7 +6,9 @@ Download eBook as PDF from SAP Learning Hub.
 
 ## Prerequisite
 
-Having Google Chrome installed.
+- NodeJS
+- Google Chrome
+
 You should put the path of chrome.exe in the [config.json](config.json) file in the attribute : `CHROME_EXE`. These are the default paths depending on your os :
 
 - Windows : `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`
