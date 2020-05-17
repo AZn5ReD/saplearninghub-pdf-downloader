@@ -15,6 +15,10 @@ function getURLTemplate() {
 }
 
 export function targetDirCheck() {
+  if (config.CHILD_STREAM) {
+    console.info(`Used as child stream, no folder needed`);
+    return true;
+  }
   try {
     if (!fs.existsSync(config.TARGET_DIR)) {
       console.info(`Target dir ${config.TARGET_DIR} doesn't exist`);
@@ -44,7 +48,9 @@ function initFile(filePath) {
       return SVGtoPDF(this, svg, x, y, options), this;
     };
     const doc = new PDFDocument();
-    const stream = fs.createWriteStream(filePath);
+    const stream = config.CHILD_STREAM
+      ? fs.createWriteStream(null, { fd: 3 })
+      : fs.createWriteStream(filePath);
     stream.on("finish", () => {
       process.exit();
     });

@@ -1,7 +1,7 @@
 import fs from "fs";
 import minimist from "minimist";
 
-const argv = minimist(process.argv.slice(2), { boolean: "debug" });
+const argv = minimist(process.argv.slice(2), { boolean: ["debug", "child"] });
 const configFile =
   process.env.NODE_ENV === "development"
     ? "./config_test.json"
@@ -23,4 +23,5 @@ export default {
   TARGET_DIR: argv.target ? argv.target : config.TARGET_DIR,
   DEBUG: argv.debug ? argv.debug : config.DEBUG,
   CHROME_EXE: argv.chrome ? argv.chrome : config.CHROME_EXE,
+  CHILD_STREAM: argv.stream ? argv.stream : config.CHILD_STREAM,
 };

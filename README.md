@@ -22,10 +22,11 @@ npm install
 
 ## Usage
 
-There are 3 modes :
+There are 4 modes :
 
 - CLI
 - Config file
+- Node child process
 - GUI
 
 They can be mixed. For example you can set the user/password in the config file and set the URL in the CLI. The values from the CLI will override the values from the file.
@@ -50,6 +51,28 @@ Here is an example of the possible arguments
 ```bash
 npm run build
 npm run start --  --chrome="/usr/bin/google-chrome" --debug="false" --url="https://exmaple.com" --login="SUSER" --password="SUSER_PASSWORD" --target="./target_dir"
+```
+
+### Node child process
+
+Here is an example of how to use it as a library. The script will pipe the PDF stream out on the `third` file descriptor.
+
+```js
+const child = child_process.fork(
+  "../saplearninghub-pdf-downloader/dist/index.js",
+  [
+    `--url=${downloadURL}`,
+    `--login=${login}`,
+    `--password=${passord}`,
+    `--chrome=${chromeExePath}`,
+    `--stream=true`,
+  ],
+  {
+    stdio: ["pipe", "pipe", "pipe", "pipe", "ipc"],
+  }
+);
+
+child.stdio[3].pipe(stream);
 ```
 
 ### GUI

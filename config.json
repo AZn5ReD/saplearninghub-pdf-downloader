@@ -4,5 +4,6 @@
   "PASSWORD": "SUSER_PASSWORD",
   "TARGET_DIR": "./target_dir",
   "DEBUG": false,
-  "CHROME_EXE": "/usr/bin/google-chrome"
+  "CHROME_EXE": "/usr/bin/google-chrome",
+  "CHILD_STREAM": false
 }
