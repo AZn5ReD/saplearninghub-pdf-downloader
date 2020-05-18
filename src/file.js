@@ -40,7 +40,6 @@ function getFilePath() {
     ? filename
     : config.TARGET_DIR + "/" + filename;
   console.info("File path:", filePath);
-  processSend({ filename });
   return filePath;
 }
 
@@ -102,6 +101,7 @@ export async function downloadFile(page) {
 
   console.info("Starting download...");
   processSend({ log: "Downloading..." });
+  processSend({ filename });
   let i = 1;
   while (lastPage ? i <= lastPage : true) {
     try {
