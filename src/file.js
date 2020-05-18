@@ -101,7 +101,7 @@ export async function downloadFile(page) {
 
   console.info("Starting download...");
   processSend({ log: "Downloading..." });
-  processSend({ filename });
+  processSend({ filename: filePath });
   let i = 1;
   while (lastPage ? i <= lastPage : true) {
     try {
