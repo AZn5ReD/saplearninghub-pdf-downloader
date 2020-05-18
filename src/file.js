@@ -1,9 +1,9 @@
 import fs from "fs";
 import PDFDocument from "pdfkit";
 import SVGtoPDF from "svg-to-pdfkit";
-
 import constant from "./constants.json";
 import config from "./config";
+import processSend from "./process";
 
 function getURLTemplate() {
   const URLArray = config.DOWNLOAD_URL.split("/");
@@ -33,12 +33,14 @@ export function targetDirCheck() {
 }
 
 function getFilePath() {
-  let filePath = "";
   const URLArray = config.DOWNLOAD_URL.split("/");
   URLArray.pop();
   let filename = URLArray[URLArray.length - 1] + ".pdf";
-  filePath = config.TARGET_DIR + "/" + filename;
+  const filePath = config.CHILD_STREAM
+    ? filename
+    : config.TARGET_DIR + "/" + filename;
   console.info("File path:", filePath);
+  processSend({ filename });
   return filePath;
 }
 
@@ -66,9 +68,7 @@ async function getLastPage(page) {
   const lastPage = await page.evaluate(() =>
     document.querySelector("#progressIndicator").innerHTML.slice(3)
   );
-  if (process.send) {
-    process.send({ maximum: lastPage });
-  }
+  processSend({ maximum: lastPage });
   console.info("Last page:", lastPage);
   return lastPage;
 }
@@ -94,21 +94,21 @@ async function addSVGToPDF(page, doc, i) {
 
 export async function downloadFile(page) {
   console.info("Initialize file");
+  processSend({ log: "Initializing file" });
   const URLTemplate = getURLTemplate();
   const filePath = getFilePath();
   const { doc, stream } = initFile(filePath);
   const lastPage = await getLastPage(page);
 
   console.info("Starting download...");
+  processSend({ log: "Downloading..." });
   let i = 1;
   while (lastPage ? i <= lastPage : true) {
     try {
       let pageExists = await goToURL(page, URLTemplate, i);
       if (!pageExists) break;
       await addSVGToPDF(page, doc, i);
-      if (process.send) {
-        process.send({ progress: i });
-      }
+      processSend({ progress: i });
       i++;
     } catch (error) {
       console.error(error);
@@ -120,8 +120,10 @@ export async function downloadFile(page) {
     doc.pipe(stream);
     doc.end();
     console.info(`File ${filePath} created :)`);
+    processSend({ log: "File downloaded !" });
   } catch (error) {
     console.error(error);
     console.error(`File ${filePath} not created :(`);
+    processSend({ log: "Error while downloading file" });
   }
 }

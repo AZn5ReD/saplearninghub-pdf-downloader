@@ -1,5 +1,6 @@
 import constant from "./constants.json";
 import config from "./config";
+import processSend from "./process";
 
 async function redirection(page) {
   console.info("Redirected to:", page.url());
@@ -11,6 +12,7 @@ async function redirection(page) {
 export async function login(page) {
   try {
     console.info("Going to:", constant.LEARNINGHUB_URL);
+    processSend({ log: "Connecting..." });
     await page.goto(constant.LEARNINGHUB_URL, { followRedirect: true });
     await page.waitForSelector(constant.LOGIN_SELECTOR, {
       visible: true,
@@ -85,6 +87,7 @@ async function navToSF(page) {
 }
 
 export async function getAuthorization(page) {
+  processSend({ log: "Authentication..." });
   await cookiePopup(page);
   await navToSF(page);
 }

@@ -2,10 +2,12 @@ import puppeteer from "puppeteer";
 import config from "./config";
 import { login, getAuthorization } from "./navigation";
 import { downloadFile, targetDirCheck } from "./file";
+import processSend from "./process";
 
 async function initPuppeteer() {
   try {
     console.info("Starting script...");
+    processSend({ log: "Initialization..." });
     const browser = await puppeteer.launch({
       args: ["--disable-features=site-per-process"],
       headless: !config.DEBUG,
@@ -31,6 +33,6 @@ export default async function main() {
   await downloadFile(page);
 
   process.on("exit", (code) => {
-    console.log(`Exiting with code ${code}`);
+    console.info(`Exiting with code ${code}`);
   });
 }
