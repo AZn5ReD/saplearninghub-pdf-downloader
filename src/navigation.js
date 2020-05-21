@@ -23,6 +23,9 @@ export async function login(page) {
     await page.click(constant.SUBMIT_SELECTOR);
 
     console.info("Entering password: ***");
+    await page.waitForSelector(constant.PASSWORD_SELECTOR, {
+      visible: true,
+    });
     await page.type(constant.PASSWORD_SELECTOR, config.PASSWORD);
 
     console.info("Submiting...");
