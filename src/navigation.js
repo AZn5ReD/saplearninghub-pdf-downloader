@@ -84,6 +84,7 @@ async function navToSF(page) {
     }, links[0]);
     await links[0].click();
     await redirection(page);
+    await redirection(page);
   } catch (error) {
     console.error("Error while navToSF", error);
   }
