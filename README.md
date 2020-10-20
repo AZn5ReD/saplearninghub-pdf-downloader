@@ -38,7 +38,7 @@ The download URL of the eBook URL is on the learning hub :
 ### Config File
 
 Change the file [config.json](config.json) according to your needs.
-For windows, the `TARGET_DIR` must have double backslash for the path (for example : "C:\\Users\\myuser\\Downloads")
+For windows, the `TARGET_DIR` must have double backslash for the path (for example : `C:\\Users\\myuser\\Downloads`)
 
 ```bash
 npm run build
