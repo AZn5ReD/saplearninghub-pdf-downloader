@@ -11,7 +11,7 @@ Download eBook as PDF from SAP Learning Hub.
 
 You should put the path of chrome.exe in the [config.json](config.json) file in the attribute : `CHROME_EXE`. These are the default paths depending on your os :
 
-- Windows : `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`
+- Windows : `C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe`
 - Linux : `/usr/bin/google-chrome`
 
 ## Installation
@@ -38,6 +38,7 @@ The download URL of the eBook URL is on the learning hub :
 ### Config File
 
 Change the file [config.json](config.json) according to your needs.
+For windows, the `TARGET_DIR` must have double backslash for the path (for example : `C:\\Users\\myuser\\Downloads`)
 
 ```bash
 npm run build
