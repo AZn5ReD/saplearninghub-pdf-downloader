@@ -4,7 +4,7 @@
   "PASSWORD_SELECTOR": "input[id='j_password']",
   "SUBMIT_SELECTOR": "button[id='logOnFormSubmit']",
   "URL_CONNECTED": "https://learninghub.sap.com/?languagePrompt=true",
-  "SUCCESS_FACTOR_LINK_SELECTOR": "a[href^='https://performancemanager.successfactors.eu/']",
+  "SUCCESS_FACTOR_URL": "https://performancemanager.successfactors.eu/sf/learning?company=learninghub",
   "SVG_URL": "xml/topic$$$.svg",
   "TOPIC_VAR": "$$$"
 }

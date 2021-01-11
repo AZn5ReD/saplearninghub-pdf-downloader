@@ -105,7 +105,8 @@ dist
 
 # Test files
 data/
-config_test.json
+config*.json
+fonts/
 
 # Build
 build/

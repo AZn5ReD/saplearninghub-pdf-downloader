@@ -74,15 +74,7 @@ async function cookiePopup(page) {
 async function navToSF(page) {
   try {
     console.info(`Navigating to SuccessFactor`);
-    const links = await page.$$(constant.SUCCESS_FACTOR_LINK_SELECTOR);
-    if (links.length <= 0) {
-      console.error("Can't find SuccessFactor Link");
-      return;
-    }
-    await page.evaluateHandle((el) => {
-      el.target = "_self";
-    }, links[0]);
-    await links[0].click();
+    await page.goto(constant.SUCCESS_FACTOR_URL, { followRedirect: true });
     await redirection(page);
     await redirection(page);
   } catch (error) {
