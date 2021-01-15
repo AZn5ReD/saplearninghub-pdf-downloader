@@ -1,10 +1,11 @@
 {
-  "LEARNINGHUB_URL": "https://learninghub.sap.com/login",
+  "SUCCESS_FACTOR_URL": "https://performancemanager.successfactors.eu/sf/learning?company=learninghub",
   "LOGIN_SELECTOR": "input[id='j_username']",
   "PASSWORD_SELECTOR": "input[id='j_password']",
+  "UNIVERSAL_ID_PASSWORD_SELECTOR": "input[id='password']",
   "SUBMIT_SELECTOR": "button[id='logOnFormSubmit']",
-  "URL_CONNECTED": "https://learninghub.sap.com/?languagePrompt=true",
-  "SUCCESS_FACTOR_URL": "https://performancemanager.successfactors.eu/sf/learning?company=learninghub",
+  "UNIVERSAL_ID_SUBMIT_SELECTOR": "button.test-button",
+  "URL_CONNECTED": "https://saplearninghub.plateau.com/",
   "SVG_URL": "xml/topic$$$.svg",
   "TOPIC_VAR": "$$$"
 }

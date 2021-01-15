@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 import config from "./config";
-import { login, getAuthorization } from "./navigation";
+import { login } from "./navigation";
 import { downloadFile, targetDirCheck } from "./file";
 import processSend from "./process";
 
@@ -29,7 +29,6 @@ export default async function main() {
   if (!targetDirCheck() || !(await login(page))) {
     throw new Error("Error during init");
   }
-  await getAuthorization(page);
   await downloadFile(page);
 
   process.on("exit", (code) => {

@@ -11,9 +11,9 @@ async function redirection(page) {
 
 export async function login(page) {
   try {
-    console.info("Going to:", constant.LEARNINGHUB_URL);
+    console.info("Going to:", constant.SUCCESS_FACTOR_URL);
     processSend({ log: "Connecting..." });
-    await page.goto(constant.LEARNINGHUB_URL, { followRedirect: true });
+    await page.goto(constant.SUCCESS_FACTOR_URL, { followRedirect: true });
     await page.waitForSelector(constant.LOGIN_SELECTOR, {
       visible: true,
     });
@@ -23,22 +23,29 @@ export async function login(page) {
     await page.click(constant.SUBMIT_SELECTOR);
 
     console.info("Entering password: ***");
-    await page.waitForSelector(constant.PASSWORD_SELECTOR, {
-      visible: true,
-    });
-    await page.type(constant.PASSWORD_SELECTOR, config.PASSWORD);
+    const password_input = await Promise.race([
+      page.waitForSelector(constant.PASSWORD_SELECTOR, {
+        visible: true,
+      }),
+      page.waitForSelector(constant.UNIVERSAL_ID_PASSWORD_SELECTOR, {
+        visible: true,
+      }),
+    ]);
+    await password_input.type(config.PASSWORD);
 
     console.info("Submiting...");
-    await Promise.all([
-      page.click(constant.SUBMIT_SELECTOR),
-      redirection(page),
+    const submit_button = await Promise.race([
+      page.waitForSelector(constant.SUBMIT_SELECTOR, {
+        visible: true,
+      }),
+      page.waitForSelector(constant.UNIVERSAL_ID_SUBMIT_SELECTOR, {
+        visible: true,
+      }),
     ]);
-    if (page.url().startsWith("https://accounts.sap.com/")) {
-      throw new Error("Login failed :(");
-    }
+    await submit_button.click();
     await redirection(page);
 
-    if (page.url() === constant.URL_CONNECTED) {
+    if (page.url().startsWith(constant.URL_CONNECTED)) {
       console.info("Connected :)");
       return true;
     } else {
@@ -48,42 +55,4 @@ export async function login(page) {
   } catch (error) {
     console.error("Error during login:", error);
   }
-}
-
-async function cookiePopup(page) {
-  try {
-    const frame = await page
-      .mainFrame()
-      .childFrames()
-      .find((f) => {
-        return f.name().startsWith("pop-frame") ? f : null;
-      });
-    if (!frame) {
-      console.info("No cookie consent");
-      return;
-    }
-    await frame.waitForSelector("a[class='call']");
-    await frame.click("a[class='call']");
-    console.info("Cookie accepted");
-    await page.waitForNavigation();
-  } catch (error) {
-    console.error("Error during cookie consent:", error);
-  }
-}
-
-async function navToSF(page) {
-  try {
-    console.info(`Navigating to SuccessFactor`);
-    await page.goto(constant.SUCCESS_FACTOR_URL, { followRedirect: true });
-    await redirection(page);
-    await redirection(page);
-  } catch (error) {
-    console.error("Error while navToSF", error);
-  }
-}
-
-export async function getAuthorization(page) {
-  processSend({ log: "Authentication..." });
-  await cookiePopup(page);
-  await navToSF(page);
 }
