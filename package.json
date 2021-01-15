@@ -26,9 +26,9 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "start": "set NODE_ENV=production && node ./dist/index.js",
-    "webpack-dev": "set NODE_ENV=development && webpack && node ./dist/index.js",
-    "dev": "set NODE_ENV=development && nodemon --exec babel-node src/index.js"
+    "start": "set NODE_ENV=production && node --no-deprecation ./dist/index.js ",
+    "webpack-dev": "set NODE_ENV=development && webpack && node --no-deprecation ./dist/index.js",
+    "dev": "set NODE_ENV=development && nodemon --exec babel-node --no-deprecation src/index.js"
   },
   "repository": {
     "type": "git",
