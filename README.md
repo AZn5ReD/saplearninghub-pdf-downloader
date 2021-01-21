@@ -100,6 +100,7 @@ npm run dev
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+If you like the project, you can buy me a [coffee](https://paypal.me/azn5red).
 
 ## License
 
