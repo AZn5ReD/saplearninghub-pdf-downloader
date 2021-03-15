@@ -88,6 +88,16 @@ Copy the [config.json](config.json) file into the root of the project with the n
 npm run dev
 ```
 
+## Common issues
+### Can't connect
+```bash
+Can't connect :(
+Error: Error during init
+```
+
+You can try to connect first and see if there is any popup or message you could suppress to avoid blocking the script.
+If it's still not working, I can only debug if you send me your credentials. I use my own user which has certainly a different type from yours and I don't have access to all user types.
+
 ## Build With
 
 - [puppeteer](https://github.com/puppeteer/puppeteer) - Headless Chrome Node.js API
