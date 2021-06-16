@@ -46,7 +46,10 @@ function getFilePath() {
 function initFile(filePath) {
   try {
     PDFDocument.prototype.addSVG = function (svg, x, y, options) {
-      return SVGtoPDF(this, svg, x, y, options), this;
+      return SVGtoPDF(this, svg, x, y, {
+        ...options,
+        fontCallback: () => config.FONT_PATH
+      }), this;
     };
     const doc = new PDFDocument();
     const stream = config.CHILD_STREAM
