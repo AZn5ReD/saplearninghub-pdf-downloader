@@ -24,4 +24,5 @@ export default {
   DEBUG: argv.debug ? argv.debug : config.DEBUG,
   CHROME_EXE: argv.chrome ? argv.chrome : config.CHROME_EXE,
   CHILD_STREAM: argv.stream ? argv.stream : config.CHILD_STREAM,
+  FONT_PATH: argv.fontPath ? argv.fontPath : config.FONT_PATH
 };
