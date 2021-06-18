@@ -111,3 +111,5 @@ fonts/
 # Build
 build/
 gui/
+
+*.ttf
