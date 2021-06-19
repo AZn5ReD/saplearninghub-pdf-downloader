@@ -23,10 +23,10 @@ async function initPuppeteer (){
   };
   const browser = await puppeteer.connect(browserConfig);
   const page = await browser.newPage();
-    page.on("dialog", async (dialog) => {
-      console.info("Skipping dialog:", dialog.message());
-      await dialog.dismiss();
-    });
+  page.on("dialog", async (dialog) => {
+    console.info("Skipping dialog:", dialog.message());
+    await dialog.dismiss();
+  });
     return { browser, page };
 }
 

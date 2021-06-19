@@ -3,11 +3,16 @@ const StringReplacePlugin = require("string-replace-webpack-plugin");
 
 module.exports = {
   mode: process.NODE_ENV || "development",
-  entry: "./src",
+  // entry: "./src",
+  entry: {
+      index: './src/main.js',
+      openChrome: './src/openChrome.js',
+  },
   target: "node",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index.js",
+    filename: "[name].js",
+    chunkFilename: "[name].js"
   },
   module: {
     rules: [
