@@ -46,9 +46,10 @@ function getFilePath() {
 function initFile(filePath) {
   try {
     PDFDocument.prototype.addSVG = function (svg, x, y, options) {
+      const isChinese = config.FONT_PATH.indexOf('_ZH') > -1
       return SVGtoPDF(this, svg, x, y, {
         ...options,
-        fontCallback: () => config.FONT_PATH
+        fontCallback: isChinese ? () => config.FONT_PATH : undefined
       }), this;
     };
     const doc = new PDFDocument();

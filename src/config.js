@@ -1,19 +1,19 @@
-import fs from "fs";
-import minimist from "minimist";
+import fs from 'fs'
+import minimist from 'minimist'
 
-const argv = minimist(process.argv.slice(2), { boolean: ["debug", "child"] });
+const argv = minimist(process.argv.slice(2), { boolean: ['debug', 'child'] })
 const configFile =
-  process.env.NODE_ENV === "development"
-    ? "./config_test.json"
-    : "./config.json";
-let config = {};
+  process.env.NODE_ENV === 'development'
+    ? './config_test.json'
+    : './config.json'
+let config = {}
 
 try {
   if (fs.existsSync(configFile)) {
-    config = JSON.parse(fs.readFileSync(configFile));
+    config = JSON.parse(fs.readFileSync(configFile))
   }
 } catch (error) {
-  console.error("Error while reading config file:", error);
+  console.error('Error while reading config file:', error)
 }
 
 export default {
@@ -25,5 +25,5 @@ export default {
   CHROME_EXE: argv.chrome ? argv.chrome : config.CHROME_EXE,
   CHILD_STREAM: argv.stream ? argv.stream : config.CHILD_STREAM,
   FONT_PATH: argv.fontPath ? argv.fontPath : config.FONT_PATH,
-  BASE_PATH: argv.basePath ? argv.basePath : config.BASE_PATH,
-};
+  BASE_PATH: argv.basePath ? argv.basePath : config.BASE_PATH
+}
